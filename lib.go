@@ -20,6 +20,13 @@ func setRandomSillyName() {
 	div.Call("appendChild", node)
 }
 
-func main() {
+func rgisterCallbacks() {
+	js.Global().Set("setRandomSilly", js.NewCallback(setRandomSillyName))
+}
 
+func main() {
+	c := make(chan struct{}, 0)
+	println("WASM Go Initialized")
+	registerCallbacks()
+	<-c
 }
