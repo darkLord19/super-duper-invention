@@ -32,27 +32,35 @@ func addInnerText(text string, id string) {
 	getElementByID(id).Set("innerText", text)
 }
 
+func addClass(class string, id string) {
+	getElementByID(id).Get("classList").Call("add", class)
+}
+
 func getMaleName(this js.Value, args []js.Value) interface{} {
 	rand := randomdata.FullName(randomdata.Male)
 	addInnerText(rand, "maleT")
+	addClass("scale-in", "maleT")
 	return nil
 }
 
 func getFemaleName(this js.Value, args []js.Value) interface{} {
 	rand := randomdata.FullName(randomdata.Female)
 	addInnerText(rand, "femaleT")
+	addClass("scale-in", "femaleT")
 	return nil
 }
 
 func getSillyName(this js.Value, args []js.Value) interface{} {
 	rand := randomdata.SillyName()
 	addInnerText(rand, "sillyT")
+	addClass("scale-in", "sillyT")
 	return nil
 }
 
 func getRandomPara(this js.Value, args []js.Value) interface {}{
 	rand := randomdata.Paragraph()
 	addInnerText(rand, "textT")
+	addClass("scale-in", "textT")
 	return nil
 }
 
