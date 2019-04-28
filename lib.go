@@ -1,3 +1,5 @@
+// +build js, wasm
+
 package main
 
 import (
@@ -8,42 +10,46 @@ import (
 
 var (
 	document      js.Value
-	setSillyName  js.Callback
-	setMaleName   js.Callback
-	setFemaleName js.Callback
-	setRandomPara js.Callback
+	setSillyName  js.Func
+	setMaleName   js.Func
+	setFemaleName js.Func
+	setRandomPara js.Func
 )
 
 func init() {
 	document = js.Global().Get("document")
 }
 
-func getMaleName() {
+func getMaleName(this js.Value, args []js.Value) interface{} {
 	rand := randomdata.FullName(randomdata.Male)
+	return nil
 }
 
-func getFemaleName() {
-	rand := radomdata.FullName(randomdata.Female)
+func getFemaleName(this js.Value, args []js.Value) interface{} {
+	rand := randomdata.FullName(randomdata.Female)
+	return nil
 }
 
-func getSillyName() {
+func getSillyName(this js.Value, args []js.Value) interface{} {
 	rand := randomdata.SillyName()
+	return nil
 }
 
-func getRandomPara() {
+func getRandomPara(this js.Value, args []js.Value) interface {}{
 	rand := randomdata.Paragraph()
+	return nil
 }
 
-func registerCallbacks() {
-	setSillyName = js.Global().Set("setSillyName", js.NewCallback(getSillyName))
-	setMaleName = js.Global().Set("setMaleName", js.NewCallback(getMaleName))
-	setFemaleName = js.Global().Set("setFemaleName", js.NewCallback(getFemaleName))
-	setRandomPara = js.Global().Set("setRandomPara", js.NewCallback(getRandomPara))
+func registerFuncs() {
+	setSillyName = js.FuncOf(getSillyName)
+	setMaleName = js.FuncOf(getMaleName)
+	setFemaleName = js.FuncOf(getFemaleName)
+	setRandomPara = js.FuncOf(getRandomPara)
 }
 
 func main() {
 	c := make(chan struct{}, 0)
 	println("WASM Go Initialized")
-	registerCallbacks()
+	registerFuncs()
 	<-c
 }
