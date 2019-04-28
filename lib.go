@@ -14,6 +14,7 @@ var (
 	setMaleName   js.Func
 	setFemaleName js.Func
 	setRandomPara js.Func
+	clearAll      js.Func
 )
 
 func init() {
@@ -36,9 +37,14 @@ func addClass(class string, id string) {
 	getElementByID(id).Get("classList").Call("add", class)
 }
 
+func removeClass(class string, id string) {
+	getElementByID(id).Get("classList").Call("remove", class)
+}
+
 func getMaleName(this js.Value, args []js.Value) interface{} {
 	rand := randomdata.FullName(randomdata.Male)
 	addInnerText(rand, "maleT")
+	removeClass("scale-out", "maleT")
 	addClass("scale-in", "maleT")
 	return nil
 }
@@ -46,6 +52,7 @@ func getMaleName(this js.Value, args []js.Value) interface{} {
 func getFemaleName(this js.Value, args []js.Value) interface{} {
 	rand := randomdata.FullName(randomdata.Female)
 	addInnerText(rand, "femaleT")
+	removeClass("scale-out", "femaleT")
 	addClass("scale-in", "femaleT")
 	return nil
 }
@@ -53,6 +60,7 @@ func getFemaleName(this js.Value, args []js.Value) interface{} {
 func getSillyName(this js.Value, args []js.Value) interface{} {
 	rand := randomdata.SillyName()
 	addInnerText(rand, "sillyT")
+	removeClass("scale-out", "sillyT")
 	addClass("scale-in", "sillyT")
 	return nil
 }
@@ -60,7 +68,17 @@ func getSillyName(this js.Value, args []js.Value) interface{} {
 func getRandomPara(this js.Value, args []js.Value) interface {}{
 	rand := randomdata.Paragraph()
 	addInnerText(rand, "textT")
+	removeClass("scale-out", "textT")
 	addClass("scale-in", "textT")
+	return nil
+}
+
+func clearAllHeadings(this js.Value, args []js.Value) interface {} {
+	ids := []string{"textT", "sillyT", "maleT", "femaleT"}
+	for i:=0; i<len(ids); i++ {
+		removeClass("scale-in", ids[i])
+		addClass("scale-out", ids[i])
+	}
 	return nil
 }
 
@@ -69,6 +87,7 @@ func registerFuncs() {
 	setMaleName = js.FuncOf(getMaleName)
 	setFemaleName = js.FuncOf(getFemaleName)
 	setRandomPara = js.FuncOf(getRandomPara)
+	clearAll = js.FuncOf(clearAllHeadings)
 }
 
 func addEventListenerHelper() {
@@ -76,6 +95,7 @@ func addEventListenerHelper() {
 	addEventListener("male", setMaleName)
 	addEventListener("female", setFemaleName)
 	addEventListener("text", setRandomPara)
+	addEventListener("clear", clearAll)
 }
 
 func main() {
