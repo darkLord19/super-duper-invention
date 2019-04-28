@@ -21,14 +21,14 @@ func init() {
 }
 
 func getElementByID(id string) js.Value {
-	return document.Call("getElementByID", id)
+	return document.Call("getElementById", id)
 }
 
 func addEventListener(id string, cb js.Func) {
 	getElementByID(id).Call("addEventListener", "click", cb)
 }
 
-func addInnerText(text string, m id string) {
+func addInnerText(text string, id string) {
 	getElementByID(id).Set("innerText", text)
 }
 
@@ -52,7 +52,7 @@ func getSillyName(this js.Value, args []js.Value) interface{} {
 
 func getRandomPara(this js.Value, args []js.Value) interface {}{
 	rand := randomdata.Paragraph()
-	addInnerText(rand, textT)
+	addInnerText(rand, "textT")
 	return nil
 }
 
