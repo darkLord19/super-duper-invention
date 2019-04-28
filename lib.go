@@ -28,23 +28,31 @@ func addEventListener(id string, cb js.Func) {
 	getElementByID(id).Call("addEventListener", "click", cb)
 }
 
+func addInnerText(text string, m id string) {
+	getElementByID(id).Set("innerText", text)
+}
+
 func getMaleName(this js.Value, args []js.Value) interface{} {
 	rand := randomdata.FullName(randomdata.Male)
+	addInnerText(rand, "maleT")
 	return nil
 }
 
 func getFemaleName(this js.Value, args []js.Value) interface{} {
 	rand := randomdata.FullName(randomdata.Female)
+	addInnerText(rand, "femaleT")
 	return nil
 }
 
 func getSillyName(this js.Value, args []js.Value) interface{} {
 	rand := randomdata.SillyName()
+	addInnerText(rand, "sillyT")
 	return nil
 }
 
 func getRandomPara(this js.Value, args []js.Value) interface {}{
 	rand := randomdata.Paragraph()
+	addInnerText(rand, textT)
 	return nil
 }
 
