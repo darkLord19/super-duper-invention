@@ -20,6 +20,14 @@ func init() {
 	document = js.Global().Get("document")
 }
 
+func getElementByID(id string) js.Value {
+	return document.Call("getElementByID", id)
+}
+
+func addEventListener(id string, cb js.Func) {
+	getElementByID(id).Call("addEventListener", "click", cb)
+}
+
 func getMaleName(this js.Value, args []js.Value) interface{} {
 	rand := randomdata.FullName(randomdata.Male)
 	return nil
@@ -47,9 +55,17 @@ func registerFuncs() {
 	setRandomPara = js.FuncOf(getRandomPara)
 }
 
+func addEventListenerHelper() {
+	addEventListener("silly", setSillyName)
+	addEventListener("male", setMaleName)
+	addEventListener("female", setFemaleName)
+	addEventListener("text", setRandomPara)
+}
+
 func main() {
 	c := make(chan struct{}, 0)
 	println("WASM Go Initialized")
 	registerFuncs()
+	addEventListenerHelper()
 	<-c
 }
