@@ -8,15 +8,31 @@ license that can be found in the LICENSE file.
 
 <head>
 	<meta charset="utf-8">
-	<title>Go wasm</title>
+	<title>Go WASM</title>
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
 
-<body>
-	<!--
-	Add the following polyfill for Microsoft Edge 17/18 support:
-	<script src="https://cdn.jsdelivr.net/npm/text-encoding@0.7.0/lib/encoding.min.js"></script>
-	(see https://caniuse.com/#feat=textencoder)
-	-->
+<body class="container">
+	<div>
+		<a class="waves-effect waves-light btn-large" id="silly">Random Silly Name</a>
+		<h3 class="scale-transition scale-out" id="sillyT"></h3>
+	</div>
+	<div>
+		<a class="waves-effect waves-light btn-large" id="male">Random Male Name</a>
+		<h3 class="scale-transition scale-out" id="maleT"></h3>
+	</div>
+	<div>
+		<a class="waves-effect waves-light btn-large" id="female">Random Female Name</a>
+		<h3 class="scale-transition scale-out" id="femaleT"></h3>
+	</div>
+	<div>
+		<a class="waves-effect waves-light btn-large" id="text">Random Text</a>
+		<h3 class="scale-transition scale-out" id="textT"></h3>
+	</div>
+</body>
+
+<footer>
 	<script type="text/javascript" src="./wasm_exec.js"></script>
 	<script>
 		if (!WebAssembly.instantiateStreaming) { // polyfill
@@ -42,8 +58,9 @@ license that can be found in the LICENSE file.
 			inst = await WebAssembly.instantiate(mod, go.importObject); // reset instance
 		}
 	</script>
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-	<button onClick="setRandomSilly();" id="runButton" disabled>Run</button>
-</body>
+</footer>
 
 </html>
