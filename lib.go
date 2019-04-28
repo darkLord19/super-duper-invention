@@ -18,27 +18,27 @@ func init() {
 	document = js.Global().Get("document")
 }
 
-func setMaleName() {
+func getMaleName() {
 	rand := randomdata.FullName(randomdata.Male)
 }
 
-func setFemaleName() {
+func getFemaleName() {
 	rand := radomdata.FullName(randomdata.Female)
 }
 
-func setSillyName() {
+func getSillyName() {
 	rand := randomdata.SillyName()
 }
 
-func setRandomPara() {
+func getRandomPara() {
 	rand := randomdata.Paragraph()
 }
 
 func registerCallbacks() {
-	setSillyName = js.Global().Set("setSillyName", js.NewCallback(setRandomSillyName))
-	setMaleName = js.Global().Set("setMaleName", js.NewCallback(setRandomSillyName))
-	setFemaleName = js.Global().Set("setFemaleName", js.NewCallback(setRandomSillyName))
-	setRandomPara = js.Global().Set("setRandomPara", js.NewCallback(setRandomSillyName))
+	setSillyName = js.Global().Set("setSillyName", js.NewCallback(getSillyName))
+	setMaleName = js.Global().Set("setMaleName", js.NewCallback(getMaleName))
+	setFemaleName = js.Global().Set("setFemaleName", js.NewCallback(getFemaleName))
+	setRandomPara = js.Global().Set("setRandomPara", js.NewCallback(getRandomPara))
 }
 
 func main() {
