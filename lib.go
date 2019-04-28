@@ -6,22 +6,39 @@ import (
 	"github.com/Pallinder/go-randomdata"
 )
 
-var document js.Value
+var (
+	document      js.Value
+	setSillyName  js.Callback
+	setMaleName   js.Callback
+	setFemaleName js.Callback
+	setRandomPara js.Callback
+)
 
 func init() {
 	document = js.Global().Get("document")
 }
 
-func setRandomSillyName() {
-	rand := randomdata.SillyName()
-	div := document.Call("getElementById", "target")
-	node := document.Call("createElement", "div")
-	node.Set("innerText", rand)
-	div.Call("appendChild", node)
+func setMaleName() {
+	rand := randomdata.FullName(randomdata.Male)
 }
 
-func rgisterCallbacks() {
-	js.Global().Set("setRandomSilly", js.NewCallback(setRandomSillyName))
+func setFemaleName() {
+	rand := radomdata.FullName(randomdata.Female)
+}
+
+func setSillyName() {
+	rand := randomdata.SillyName()
+}
+
+func setRandomPara() {
+	rand := randomdata.Paragraph()
+}
+
+func registerCallbacks() {
+	setSillyName = js.Global().Set("setSillyName", js.NewCallback(setRandomSillyName))
+	setMaleName = js.Global().Set("setMaleName", js.NewCallback(setRandomSillyName))
+	setFemaleName = js.Global().Set("setFemaleName", js.NewCallback(setRandomSillyName))
+	setRandomPara = js.Global().Set("setRandomPara", js.NewCallback(setRandomSillyName))
 }
 
 func main() {
